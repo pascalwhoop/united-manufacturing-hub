@@ -178,7 +178,37 @@ data:
 
     -- #74
     ALTER TABLE counttable ADD IF NOT EXISTS scrap INTEGER DEFAULT 0;
-    
+
+    -- #360
+    -------------------- TimescaleDB table for productTags with numbers  --------------------
+    CREATE TABLE IF NOT EXISTS productTagTable
+    (
+        timestamp TIMESTAMPTZ NOT NULL,
+        uid TEXT NOT NULL REFERENCES uniqueProductTable(uid),
+        name TEXT NOT NULL,
+        value DOUBLE PRECISION NOT NULL,
+        unique (uid, name)
+    );
+
+    -------------------- TimescaleDB table for productTags with strings  --------------------
+    CREATE TABLE IF NOT EXISTS productTagTableString
+    (
+        timestamp TIMESTAMPTZ NOT NULL,
+        uid TEXT NOT NULL REFERENCES uniqueProductTable(uid),
+        name TEXT NOT NULL,
+        value TEXT NOT NULL,
+        unique (uid, name)
+    );
+
+    -------------------- TimescaleDB table for to track product inheritance  --------------------
+    CREATE TABLE IF NOT EXISTS productInheritanceTable
+    (
+        timestamp TIMESTAMPTZ NOT NULL,
+        child_uid TEXT NOT NULL REFERENCES uniqueProductTable(uid),
+        parent_uids TEXT [] NOT NULL REFERENCES uniqueProductTable(uid),
+        unique (child_uid, parent_uids) 
+    );
+
     GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO {{ .Values.factoryinsight.db_user }};
     GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO {{ .Values.factoryinsight.db_user }};
     
