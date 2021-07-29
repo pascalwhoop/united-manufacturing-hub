@@ -11,7 +11,7 @@ description: >
 
 - k3os (AMD64) installed on a bootable USB-stick (you can get it here: https://github.com/rancher/k3os/releases/ ). You can create a bootable USB-stick using [balenaEtcher](https://www.balena.io/etcher/)
 - a laptop with SSH / SFTP client (e.g. [MobaXTerm](https://mobaxterm.mobatek.net/)) and [Lens](https://k8slens.dev/) (for accessing the Kubernetes cluster) installed
-- a edge device (currently only x86 systems supported)
+- an edge device (currently only x86 systems supported)
 - keyboard, monitor, cables
 - A GitHub account with a public key. If you do not know how to do it [check out this tutorial](https://gist.github.com/dmangiarelli/1a0ae107aaa5c478c51e#ssh-setup-with-putty). You can download puttygen [here](https://the.earth.li/~sgtatham/putty/latest/w64/puttygen.exe)
 - network setup and internet access according to the image below
@@ -56,8 +56,11 @@ Warning: in production you should use your own certificates and not the ones pro
 1. Go into the folder `/home/rancher/united-manufacturing-hub/deployment/factorycube-edge`
 2. Create a new file called `development_values.yaml` using `touch development_values.yaml`
 3. Copy the following content to that file or use the following example [`development_values.yaml`](/examples/factorycube-server/development_values.yaml). 
-4. **(Only if you did not use example file)** Copy the certificates in `deplotment/factorycube-server/developmentCertificates/pki/` and then `ca.crt`, `issued/TESTING.crt` and `issued/private/TESTING.key` into `development_values.yaml`. Additionally use as `mqttBridgeURL` `ssl://factorycube-server-vernemq-local-service.factorycube-server:8883`. 
-5. Adjust `iprange` to your network IP range
+   - You can download it directly to the deployment folder by using
+   
+     ``wget -O /home/rancher/united-manufacturing-hub/deployment/factorycube-edge/development_values.yaml https://docs.umh.app/examples/factorycube-server/development_values.yaml`` 
+1. **(Only if you did not use example file)** Copy the certificates in `deplotment/factorycube-server/developmentCertificates/pki/` and then `ca.crt`, `issued/TESTING.crt` and `issued/private/TESTING.key` into `development_values.yaml`. Additionally use as `mqttBridgeURL` `ssl://factorycube-server-vernemq-local-service.factorycube-server:8883`. 
+2. Adjust `iprange` to your network IP range
 
 Example for `development_values.yaml`:
 ```yaml
